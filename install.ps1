@@ -1,6 +1,6 @@
 # Settings
 $appName = "main"
-$exeUrl = "https://github.com/deany1014/final/releases/download/v1.0.0/$appName.exe"
+$exeUrl = "https://github.com/deany1014/final/releases/download/release/main.exe"
 $installDir = "$env:APPDATA\$appName"
 $exePath = "$installDir\$appName.exe"
 $startupShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\$appName.lnk"
