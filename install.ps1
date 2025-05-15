@@ -1,22 +1,23 @@
-# Define download URL
-$exeUrl = "https://github.com/yourusername/yourrepo/releases/download/v1.0.0/yourapp.exe"
-$installDir = "$env:APPDATA\MyApp"
-$exePath = "$installDir\yourapp.exe"
+# Settings
+$exeUrl = "https://github.com/deany1014/final/releases/download/v1.0.0/yourapp.exe"
+$appName = "YourApp"
+$installDir = "$env:APPDATA\$appName"
+$exePath = "$installDir\$appName.exe"
+$startupShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\$appName.lnk"
 
-# Create folder
+# Create install directory
 if (-not (Test-Path $installDir)) {
     New-Item -ItemType Directory -Path $installDir | Out-Null
 }
 
-# Download .exe
-Invoke-WebRequest -Uri $exeUrl -OutFile $exePath
+# Download EXE
+Invoke-WebRequest -Uri $exeUrl -OutFile $exePath -UseBasicParsing
 
-# Add to Startup
-$startupShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\yourapp.lnk"
-
+# Create Startup Shortcut
 $WshShell = New-Object -ComObject WScript.Shell
 $shortcut = $WshShell.CreateShortcut($startupShortcut)
 $shortcut.TargetPath = $exePath
+$shortcut.WorkingDirectory = $installDir
 $shortcut.Save()
 
-Write-Host "Installed and added to startup!" -ForegroundColor Green
+Write-Host "`n✅ $appName installed and added to startup!" -ForegroundColor Green
