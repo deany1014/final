@@ -1,10 +1,17 @@
-# Settings
+# Define app name and paths
 $appName = "main"
 $installDir = "$env:APPDATA\$appName"
 $exePath = "$installDir\$appName.exe"
 $startupShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\$appName.lnk"
 
-# Remove Startup Shortcut
+# Kill the running process if it exists
+$proc = Get-Process -Name $appName -ErrorAction SilentlyContinue
+if ($proc) {
+    Stop-Process -Name $appName -Force
+    Write-Host "⛔ Killed running process: $appName.exe"
+}
+
+# Remove startup shortcut
 if (Test-Path $startupShortcut) {
     Remove-Item $startupShortcut -Force
     Write-Host "🗑️ Removed startup shortcut."
@@ -16,8 +23,8 @@ if (Test-Path $exePath) {
     Write-Host "🗑️ Removed application executable."
 }
 
-# Remove Folder (if empty)
-if (Test-Path $installDir -and (Get-ChildItem $installDir).Count -eq 0) {
+# Remove folder if empty
+if ((Test-Path $installDir) -and ((Get-ChildItem $installDir).Count -eq 0)) {
     Remove-Item $installDir -Force
     Write-Host "🗑️ Removed empty app folder."
 }
