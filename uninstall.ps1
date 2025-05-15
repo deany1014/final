@@ -1,5 +1,5 @@
 # Settings
-$appName = "YourApp"
+$appName = "main"
 $installDir = "$env:APPDATA\$appName"
 $exePath = "$installDir\$appName.exe"
 $startupShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\$appName.lnk"
